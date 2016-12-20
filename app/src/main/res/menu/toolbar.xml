@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+<item
+    android:id="@+id/icon_1"
+    android:icon="@drawable/icon_title_1"
+    android:title="按钮1"
+    app:showAsAction = "always"
+    />
+    <item
+        android:id="@+id/icon_2"
+        android:icon="@drawable/icon_title_2"
+        android:title="按钮2"
+        app:showAsAction = "ifRoom"
+        />
+    <item
+        android:id="@+id/icon_3"
+        android:icon="@drawable/icon_title_3"
+        android:title="按钮3"
+        app:showAsAction = "never"
+        />
+</menu>

@@ -1,31 +1,54 @@
 package com.laojiang.androidlearn70;
 
+import android.Manifest;
+import android.annotation.TargetApi;
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.ContentUris;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.database.Cursor;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.provider.DocumentsContract;
+import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
+import android.support.v4.content.FileProvider;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.app.NotificationCompat;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.laojiang.androidlearn70.activity.FruitActivity;
+import com.laojiang.androidlearn70.activity.PendingIntentActivity;
+import com.laojiang.androidlearn70.activity.intent.PriseActivity;
 import com.laojiang.androidlearn70.adapter.FruitAdapter;
 import com.laojiang.androidlearn70.bean.Fruit;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -34,8 +57,10 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class MainActivity extends AppCompatActivity {
+public  class MainActivity extends AppCompatActivity {
 
+    private static final int CHOOSE_PHOTO = 2;
+    private static final String TAG = "测试demo";
     @BindView(R.id.swipe_refresh)
     SwipeRefreshLayout swipeRefresh;
     private DrawerLayout mDrawerLayout;
@@ -47,6 +72,9 @@ public class MainActivity extends AppCompatActivity {
             )};
     private List<Fruit> fruitList = new ArrayList<>();
     private FruitAdapter adapter;
+    private CircleImageView ivTouXiang;
+    private Uri imageUri;
+    private File outputImage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,7 +96,36 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+//调用toolbar
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.toolbar, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home://滑动菜单按钮 id固定
+                mDrawerLayout.openDrawer(GravityCompat.START);
+                break;
+
+            case R.id.icon_1:
+
+                break;
+            case R.id.icon_2:
+                Toast.makeText(this, "2", Toast.LENGTH_LONG).show();
+                break;
+            case R.id.icon_3:
+                Toast.makeText(this, "3", Toast.LENGTH_LONG).show();
+                break;
+            case R.id.icon_4:
+                initNotification();
+                break;
+        }
+        return true;
+    }
     private void refreshFuits() {
         new Thread(new Runnable() {
             @Override
@@ -102,12 +159,12 @@ public class MainActivity extends AppCompatActivity {
     private void initView() {
         //利用Toolbar代替 actionbar
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+            setSupportActionBar(toolbar);
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         navView = (NavigationView) findViewById(R.id.nav_view);
         //获取headLayout的实例
         View headerView = navView.getHeaderView(0);
-        CircleImageView ivTouXiang = (CircleImageView) headerView.findViewById(R.id.iv_touxiang);
+        ivTouXiang = (CircleImageView) headerView.findViewById(R.id.iv_touxiang);
         ivTouXiang.setImageResource(R.mipmap.ico_homework_1);
         //设置标题栏滑动菜单按钮
         ActionBar actionBar = getSupportActionBar();
@@ -124,8 +181,14 @@ public class MainActivity extends AppCompatActivity {
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.nav_1://选项1
-                        Toast.makeText(MainActivity.this, "选项1", Toast.LENGTH_SHORT).show();
-
+                    initPotos();
+                        break;
+                    case R.id.nav_2://选项2
+                        initCaptrue();
+                        break;
+                    case R.id.nav_3://选项3
+                       Intent intent = new Intent(MainActivity.this,PriseActivity.class);
+                        startActivity(intent);
                         break;
                 }
                 mDrawerLayout.closeDrawers();
@@ -179,31 +242,153 @@ public class MainActivity extends AppCompatActivity {
         });
         recyclerView.setAdapter(adapter);
     }
-    //调用toolbar
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.toolbar, menu);
-        return true;
+    /**
+     * 照片
+     */
+    private void initCaptrue() {
+        if (ContextCompat.checkSelfPermission(MainActivity.this,
+        Manifest.permission.WRITE_EXTERNAL_STORAGE)!= PackageManager.PERMISSION_GRANTED){
+            ActivityCompat.requestPermissions(MainActivity.this,new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},1);
+
+        }else {
+            openAlbum();
+        }
     }
 
+    /**
+     * 打开本地照片
+     */
+    private void openAlbum() {
+        Intent intent = new Intent("android.intent.action.GET_CONTENT");
+        intent.setType("image/*");
+        startActivityForResult(intent,CHOOSE_PHOTO);
+    }
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home://滑动菜单按钮 id固定
-                mDrawerLayout.openDrawer(GravityCompat.START);
-                break;
-
-            case R.id.icon_1:
-                Toast.makeText(this, "1", Toast.LENGTH_LONG).show();
-                break;
-            case R.id.icon_2:
-                Toast.makeText(this, "2", Toast.LENGTH_LONG).show();
-                break;
-            case R.id.icon_3:
-                Toast.makeText(this, "3", Toast.LENGTH_LONG).show();
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        switch (requestCode){
+            case 1:
+                if (grantResults.length>0&&grantResults[0]==PackageManager.PERMISSION_GRANTED){
+                    openAlbum();
+                }else {
+                    Toast.makeText(this,"需要权限",Toast.LENGTH_SHORT).show();
+                }
                 break;
         }
-        return true;
     }
+    /**
+     * 照相
+     */
+    private void initPotos() {
+        outputImage = new File(getExternalCacheDir(),System.currentTimeMillis()+"_output_image.jpg");
+        try{
+            if (outputImage.exists()){
+                outputImage.delete();
+            }
+            outputImage.createNewFile();
+        }catch (IOException e){
+            e.printStackTrace();
+        }
+        if (Build.VERSION.SDK_INT>=24){
+            imageUri = FileProvider.getUriForFile(MainActivity.this,"com.android", outputImage);
+        }else {
+            imageUri = Uri.fromFile(outputImage);
+        }
+        Intent intent = new Intent("android.media.action.IMAGE_CAPTURE");
+        intent.putExtra(MediaStore.EXTRA_OUTPUT,imageUri);
+        startActivityForResult(intent,22);
+    }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        switch (requestCode){
+            case 22:
+                if (resultCode==RESULT_OK){
+                    String absolutePath = outputImage.getAbsolutePath();
+                    Glide.with(this).load(absolutePath).into(ivTouXiang);
+                }
+                break;
+            case CHOOSE_PHOTO:
+                if (resultCode==RESULT_OK){
+                    if (Build.VERSION.SDK_INT>=19){
+                        handleImageOnKitKat(data);
+                    }else {
+                        handleImageBeforeKitKat(data);
+                    }
+                }
+                break;
+        }
+    }
+
+    private void handleImageBeforeKitKat(Intent data) {
+        Uri uri = data.getData();
+        String imagePath  = getImagePath(uri,null);
+        displayImage(imagePath);
+    }
+
+    @TargetApi(19)
+    private void handleImageOnKitKat(Intent data) {
+        String imagePath = null;
+        Uri uri = data.getData();
+        if (DocumentsContract.isDocumentUri(this,uri)){
+            String docId = DocumentsContract.getDocumentId(uri);
+            if ("com.android.providers.media.documents".equals(uri.getAuthority())){
+                String id = docId.split(":")[1];//解析出数字格式的id
+                String selection = MediaStore.Images.Media._ID+"="+id;
+                imagePath = getImagePath(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,selection);
+            }else if ("com.android.providers.downloads.documents".equals(uri
+            .getAuthority())){
+                Uri contentUri = ContentUris.withAppendedId(Uri.parse("content://downloads/public_downloads"),Long.valueOf(docId));
+                imagePath = getImagePath(contentUri,null);
+            }
+        }else if ("content".equalsIgnoreCase(uri.getScheme())){
+            imagePath = getImagePath(uri,null);
+        }else if ("file".equalsIgnoreCase(uri.getScheme())){
+            imagePath = uri.getPath();
+        }
+        displayImage(imagePath);
+    }
+
+
+    private String getImagePath(Uri uri, String selection) {
+        String path = null;
+        Cursor cursor = getContentResolver().query(uri,null,selection,null,null);
+        if (cursor!=null){
+            if (cursor.moveToFirst()){
+                path = cursor.getString(cursor.getColumnIndex(MediaStore.Images.Media.DATA));
+
+            }
+            cursor.close();
+        }
+        return path;
+    }
+    private void displayImage(String imagePath) {
+        Log.d(TAG,"我是图片的路径-==="+imagePath);
+        if (imagePath!=null){
+            Glide.with(this).load(imagePath).override(400,400).into(ivTouXiang);
+        }
+    }
+
+    private void initNotification() {
+        Intent intents =new Intent(this, PendingIntentActivity.class);
+        PendingIntent pi = PendingIntent.getActivities(this,0, new Intent[]{intents},0);
+
+
+        NotificationManager manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+        Notification notification = new NotificationCompat.Builder(this)
+                .setContentTitle("我是标题")
+                .setContentText("我是内容")
+                .setWhen(System.currentTimeMillis())
+                .setSmallIcon(R.drawable.icon_title)
+                .setLargeIcon(BitmapFactory.decodeResource(getResources(),R.drawable.icon_food_1))
+                .setContentIntent(pi)//pendingIntent跳转
+                .setAutoCancel(true)//点击通知之后自己取消
+                .setDefaults(NotificationCompat.DEFAULT_ALL)
+                .setStyle(new NotificationCompat.BigPictureStyle().bigPicture(
+                        BitmapFactory.decodeResource(getResources(),R.drawable.icon_food_2)))
+                .setPriority(NotificationCompat.PRIORITY_MAX)
+                .build();
+        manager.notify(1,notification);
+
+    }
+
 }

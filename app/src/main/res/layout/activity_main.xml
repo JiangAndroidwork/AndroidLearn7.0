@@ -17,14 +17,17 @@
           android:layout_height="?attr/actionBarSize"
           android:background="?attr/colorPrimary"
           android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-
           android:popupTheme="@style/Theme.AppCompat.Light"
           app:layout_scrollFlags="scroll|enterAlways|snap"
-
           >
       </android.support.v7.widget.Toolbar>
-
+      <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="48dp"
+          android:background="#17dbdb"
+          ></LinearLayout>
    </android.support.design.widget.AppBarLayout>
+
 <android.support.v4.widget.SwipeRefreshLayout
     android:id="@+id/swipe_refresh"
     android:layout_width="match_parent"
@@ -46,9 +49,6 @@
        android:layout_margin="16dp"
        android:src="@drawable/icon_done"
        />
-
-
-
 </android.support.design.widget.CoordinatorLayout>
    <android.support.design.widget.NavigationView
        android:id="@+id/nav_view"

@@ -10,7 +10,7 @@
     android:id="@+id/appBar"
     android:fitsSystemWindows="true"
     android:layout_width="match_parent"
-    android:layout_height="250dp">
+    android:layout_height="wrap_content">
     <android.support.design.widget.CollapsingToolbarLayout
         android:fitsSystemWindows="true"
         android:id="@+id/collapsing_toolbar"
@@ -18,7 +18,7 @@
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
         app:layout_scrollFlags="scroll|exitUntilCollapsed"
         app:contentScrim="?attr/colorPrimary"
-        android:layout_height="match_parent">
+        android:layout_height="250dp">
         <ImageView
             android:fitsSystemWindows="true"
             android:id="@+id/fruit_image_view"
@@ -35,42 +35,76 @@
             ></android.support.v7.widget.Toolbar>
 
     </android.support.design.widget.CollapsingToolbarLayout>
+    <!--选项卡-->
+    <android.support.design.widget.TabLayout
+        android:id="@+id/video_detail_linear_layout"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        app:tabIndicatorColor="@color/colorAccent"
+        app:tabSelectedTextColor="@color/colorAccent"
+        app:tabTextColor="@android:color/black"
+        app:tabMode="fixed"
+        app:tabGravity="fill"
+        />
 </android.support.design.widget.AppBarLayout>
+
+
     <android.support.v4.widget.NestedScrollView
+        android:id="@+id/nestedScrollView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        >
+        android:fillViewport="true"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        <LinearLayout
-            android:orientation="vertical"
+        <android.support.v4.view.ViewPager
+            android:id="@+id/view_pager"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <android.support.v7.widget.CardView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="15dp"
-                android:layout_marginLeft="15dp"
-                android:layout_marginRight="15dp"
-                android:layout_marginTop="35dp"
-                app:cardCornerRadius="4dp"
-                >
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
-                    android:id="@+id/fruit_content_text"
-                    />
-            </android.support.v7.widget.CardView>
-        </LinearLayout>
+            android:layout_height="wrap_content"/>
     </android.support.v4.widget.NestedScrollView>
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fab"
-        android:layout_width="wrap_content"
-        android:layout_margin="16dp"
-        android:src="@drawable/icon_activity_fruit_button"
-        app:layout_anchor="@id/appBar"
-        app:layout_anchorGravity="bottom|end"
-        android:layout_height="wrap_content" />
+
+    <!--&lt;!&ndash;要想标题栏折叠与listview混合使用需要在listview中添加 android:nestedScrollingEnabled="true"&ndash;&gt;-->
+    <!--<ListView-->
+        <!--app:layout_behavior="@string/appbar_scrolling_view_behavior"-->
+        <!--android:id="@+id/lv_data"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:dividerHeight="5dp"-->
+        <!--android:nestedScrollingEnabled="true" -->
+        <!--android:scrollbars="none"-->
+        <!--android:divider="@null"-->
+        <!--&gt;</ListView>-->
+    <!--<android.support.v4.widget.NestedScrollView-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--app:layout_behavior="@string/appbar_scrolling_view_behavior"-->
+        <!--&gt;-->
+
+        <!--<LinearLayout-->
+            <!--android:orientation="vertical"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="match_parent">-->
+
+            <!--<com.viewpagerindicator.TabPageIndicator-->
+                <!--android:id="@+id/tab_indicator"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="48dp">-->
+
+            <!--</com.viewpagerindicator.TabPageIndicator>-->
+            <!--<android.support.v4.view.ViewPager-->
+                <!--android:id="@+id/view_pager"-->
+                <!--android:overScrollMode="never"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="match_parent">-->
+
+            <!--</android.support.v4.view.ViewPager>-->
+        <!--</LinearLayout>-->
+    <!--</android.support.v4.widget.NestedScrollView>-->
+    <!--<android.support.design.widget.FloatingActionButton-->
+        <!--android:id="@+id/fab"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_margin="16dp"-->
+        <!--android:src="@drawable/icon_activity_fruit_button"-->
+        <!--app:layout_anchor="@id/appBar"-->
+        <!--app:layout_anchorGravity="bottom|end"-->
+        <!--android:layout_height="wrap_content" />-->
 </android.support.design.widget.CoordinatorLayout>

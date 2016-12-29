@@ -11,10 +11,22 @@
         android:id="@+id/icon_2"
         android:icon="@drawable/icon_title_2"
         android:title="按钮2"
-        app:showAsAction = "ifRoom"
+        app:showAsAction = "always"
         />
     <item
         android:id="@+id/icon_3"
+        android:icon="@drawable/icon_title_3"
+        android:title="按钮3"
+        app:showAsAction = "never"
+        />
+    <item
+        android:id="@+id/icon_4"
+        android:icon="@drawable/icon_title_3"
+        android:title="按钮3"
+        app:showAsAction = "never"
+        />
+    <item
+        android:id="@+id/icon_5"
         android:icon="@drawable/icon_title_3"
         android:title="按钮3"
         app:showAsAction = "never"

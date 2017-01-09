@@ -13,6 +13,7 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
@@ -41,6 +42,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.githang.statusbar.StatusBarCompat;
 import com.laojiang.androidlearn70.activity.FruitActivity;
 import com.laojiang.androidlearn70.activity.PendingIntentActivity;
 import com.laojiang.androidlearn70.activity.intent.PriseActivity;
@@ -75,12 +77,17 @@ public  class MainActivity extends AppCompatActivity {
     private CircleImageView ivTouXiang;
     private Uri imageUri;
     private File outputImage;
+    private RecyclerView recyclerView;
+    private LinearLayoutManager linearLayoutManager;
+    private int lastVisibleItem;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+        //设置状态栏的背景颜色及字体颜色
+        StatusBarCompat.setStatusBarColor(this,getResources().getColor(R.color.colorPrimary),false);
         initFruits();
         initView();
         initSwip();
@@ -149,7 +156,7 @@ public  class MainActivity extends AppCompatActivity {
 
     private void initFruits() {
         fruitList.clear();
-        for (int i = 0; i < 200; i++) {
+        for (int i = 0; i < 15; i++) {
             Random random = new Random();
             int index = random.nextInt(fruits.length);
             fruitList.add(fruits[index]);
@@ -209,13 +216,13 @@ public  class MainActivity extends AppCompatActivity {
                         }).show();
             }
         });
-        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
+        recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
         GridLayoutManager layoutManager = new GridLayoutManager(this, 2);
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+        linearLayoutManager = new LinearLayoutManager(this);
         StaggeredGridLayoutManager staggeredGridLayoutManager = new StaggeredGridLayoutManager(4,StaggeredGridLayoutManager.VERTICAL);
 
         recyclerView.setItemAnimator(new DefaultItemAnimator());
-        recyclerView.setLayoutManager(staggeredGridLayoutManager);
+        recyclerView.setLayoutManager(linearLayoutManager);
         adapter = new FruitAdapter(this, fruitList, new FruitAdapter.CallBack() {
             @Override
             public void callBackOnclick(View v) {
@@ -241,6 +248,39 @@ public  class MainActivity extends AppCompatActivity {
             }
         });
         recyclerView.setAdapter(adapter);
+        iniListener();
+    }
+
+    private void iniListener() {
+        //上拉加载
+     recyclerView.setOnScrollListener(new RecyclerView.OnScrollListener() {
+         @Override
+         public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+             super.onScrollStateChanged(recyclerView, newState);
+             if (newState ==RecyclerView.SCROLL_STATE_IDLE && lastVisibleItem + 1 ==adapter.getItemCount()) {
+                 adapter.changeMoreStatus(FruitAdapter.LOADING_MORE);
+                 new Handler().postDelayed(new Runnable() {
+                     @Override
+                     public void run() {
+                         List<Fruit> newDatas = new ArrayList<Fruit>();
+                         for (int i = 0; i< 15; i++) {
+                             Random random = new Random();
+                             int index = random.nextInt(fruits.length);
+                             fruitList.add(fruits[index]);
+                         }
+                         adapter.addMoreItem(newDatas);
+                         adapter.changeMoreStatus(FruitAdapter.PULLUP_LOAD_MORE);
+                     }
+                 }, 2500);
+             }
+         }
+
+         @Override
+         public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+             super.onScrolled(recyclerView, dx, dy);
+             lastVisibleItem =linearLayoutManager.findLastVisibleItemPosition();
+         }
+     });
     }
 
     /**

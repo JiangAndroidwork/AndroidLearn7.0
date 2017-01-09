@@ -23,10 +23,12 @@ public class PriseActivity extends BaseActivity {
     protected void initSetContentView() {
         super.initSetContentView();
         setContentView(R.layout.activity_prise);
+
     }
 
     @Override
     protected void initViews() {
+        super.initViews();
         String[] buttonName = new String[]{"打电话"};
         adapter = new GvPriseAdapter(mContext,buttonName);
         gvList.setAdapter(adapter);

@@ -20,6 +20,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.githang.statusbar.StatusBarCompat;
 import com.laojiang.androidlearn70.R;
 import com.laojiang.androidlearn70.adapter.fruitdetail.FruitDetailAdapter;
 import com.laojiang.androidlearn70.adapter.fruitdetail.ViewPagerAdapter;
@@ -74,6 +75,8 @@ public class FruitActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_fruit);
         ButterKnife.bind(this);
+
+        StatusBarCompat.setStatusBarColor(this,getResources().getColor(R.color.nocolor),true);
         layoutInflater = LayoutInflater.from(this);
         initView();
         initData();
@@ -108,7 +111,7 @@ public class FruitActivity extends AppCompatActivity {
 
         viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager(),tabs,this);
         viewAdapter = new TestViewPageAdapter();
-        viewPager.setAdapter(viewAdapter);
+        viewPager.setAdapter(viewPagerAdapter);
         tabLayout.setupWithViewPager(viewPager);
     }
 

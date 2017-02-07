@@ -1,13 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
+    android:background="@color/white"
     android:layout_height="match_parent">
 <GridView
+    android:layoutAnimation="@anim/layout_random_fade"
+    android:paddingLeft="14dp"
+    android:paddingRight="14dp"
+    android:paddingTop="14dp"
     android:id="@+id/gv_list"
     android:numColumns="4"
     android:horizontalSpacing="5dp"
     android:verticalSpacing="5dp"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"></GridView>
+    android:layout_height="match_parent"></GridView>
 
 </LinearLayout>

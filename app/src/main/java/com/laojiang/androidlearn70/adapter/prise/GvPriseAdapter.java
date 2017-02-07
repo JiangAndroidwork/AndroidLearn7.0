@@ -10,6 +10,7 @@ import com.laojiang.androidlearn70.adapter.adapterpacking.MyBaseAdapter;
 import com.laojiang.androidlearn70.adapter.adapterpacking.ViewHolder;
 
 /**
+ * listview适配器应用
  * Created by Jiang on 2016/12/27.
  */
 

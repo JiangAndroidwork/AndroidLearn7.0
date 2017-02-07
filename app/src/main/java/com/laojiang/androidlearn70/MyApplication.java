@@ -10,6 +10,8 @@ import android.content.Context;
 public class MyApplication extends Application {
     private Context context;
     private static MyApplication instance;
+    /**调试模式  打包时改成false 减少资源占用*/
+    public static boolean DEBUG = true;
     @Override
     public void onCreate() {
         super.onCreate();

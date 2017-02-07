@@ -1,5 +1,9 @@
 package com.laojiang.androidlearn70.activity.intent;
 
+import android.content.Intent;
+import android.net.Uri;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.GridView;
 
 import com.laojiang.androidlearn70.R;
@@ -29,9 +33,36 @@ public class PriseActivity extends BaseActivity {
     @Override
     protected void initViews() {
         super.initViews();
-        String[] buttonName = new String[]{"打电话"};
+        String[] buttonName = new String[]{"打电话","draglistview","bindServer","IntentService","打电话","发短信","打电话","发短信","打电话","发短信","打电话","发短信","打电话","发短信"};
         adapter = new GvPriseAdapter(mContext,buttonName);
         gvList.setAdapter(adapter);
+        iniview();
+    }
 
+    private void iniview() {
+        gvList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                switch (i){
+                    case 0:
+                        Intent intentTel = new Intent(Intent.ACTION_DIAL);
+                        intentTel.setData(Uri.parse("tel:10086"));
+                        startActivity(intentTel);
+                        break;
+                    case 1:
+                        Intent intentDrag = new Intent(mContext,DragListViewActivity.class);
+
+                        startActivity(intentDrag);
+                        break;
+                    case 2:
+                        Intent bindServer = new Intent(mContext,TestBindServiceActivity.class);
+                        startActivity(bindServer);
+                        break;
+                    case 3:
+
+                        break;
+                }
+            }
+        });
     }
 }

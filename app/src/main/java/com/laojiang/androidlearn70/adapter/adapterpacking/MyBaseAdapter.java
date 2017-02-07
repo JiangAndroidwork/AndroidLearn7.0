@@ -6,6 +6,7 @@ import android.widget.BaseAdapter;
 import java.util.List;
 
 /**
+ * 封装BaseAdapter
  * Created by Jiang on 2016/12/27.
  */
 

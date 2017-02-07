@@ -3,16 +3,22 @@
     package="com.laojiang.androidlearn70">
 <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"></uses-permission>
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"></uses-permission>
+    <uses-permission android:name="android.permission.VIBRATE"></uses-permission>
     <application
+        android:resizeableActivity="true"
         android:name=".MyApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
+
         android:theme="@style/AppTheme">
         <activity android:name=".MainActivity"
+            android:supportsPictureInPicture="true"
+            android:label="安卓技术架构"
 
-            android:label="我是标题栏">
+            >
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -21,9 +27,17 @@
 
         </activity>
         <activity android:name=".activity.FruitActivity"
+            android:supportsPictureInPicture="true"
             android:theme="@style/FruitActivityTheme"></activity>
+        <!--点击通知栏消息 然后按返回键是回到主屏幕还是回到应用界面 取决于 android:taskAffinity=""，如果有就是单独任务 返回直接到主屏幕。-->
         <activity android:name=".activity.PendingIntentActivity"
-            android:screenOrientation="portrait"></activity>
+            android:launchMode="singleTask"
+            android:taskAffinity=""
+            android:excludeFromRecents="true"
+            android:screenOrientation="portrait">
+
+
+        </activity>
         <!--安卓7.0uri 内容提供者包装uri-->
         <provider
 
@@ -38,6 +52,10 @@
         <activity android:name=".activity.intent.PriseActivity"
             android:screenOrientation="portrait"
             ></activity>
+        <activity android:name=".activity.intent.DragListViewActivity"></activity>
+        <activity android:name=".activity.intent.TestBindServiceActivity"></activity>
+
+        <service android:name=".server.TestBindService"></service>
     </application>
 
 </manifest>

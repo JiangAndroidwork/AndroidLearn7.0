@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 /**
+ * 封装ViewHolder
  * Created by Jiang on 2016/12/27.
  */
 

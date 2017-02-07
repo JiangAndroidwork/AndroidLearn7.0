@@ -1,4 +1,4 @@
-package com.laojiang.androidlearn70.utils.view;
+package com.laojiang.androidlearn70.utils.weight;
 
 import android.support.design.widget.AppBarLayout;
 

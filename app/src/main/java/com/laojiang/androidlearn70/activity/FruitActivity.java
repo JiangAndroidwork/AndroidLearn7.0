@@ -24,7 +24,7 @@ import com.githang.statusbar.StatusBarCompat;
 import com.laojiang.androidlearn70.R;
 import com.laojiang.androidlearn70.adapter.fruitdetail.FruitDetailAdapter;
 import com.laojiang.androidlearn70.adapter.fruitdetail.ViewPagerAdapter;
-import com.laojiang.androidlearn70.utils.view.AppBarStateChangeListener;
+import com.laojiang.androidlearn70.utils.weight.AppBarStateChangeListener;
 
 import java.util.ArrayList;
 import java.util.List;

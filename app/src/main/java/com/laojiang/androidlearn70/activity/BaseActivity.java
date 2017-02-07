@@ -11,6 +11,7 @@ import com.laojiang.androidlearn70.R;
 import butterknife.ButterKnife;
 
 /**
+ *
  * Created by Jiang on 2016/12/27.
  */
 
@@ -30,7 +31,7 @@ public class BaseActivity extends AppCompatActivity {
 
     }
     protected void initViews(){
-        StatusBarCompat.setStatusBarColor(this,getResources().getColor(R.color.white),true);
+        StatusBarCompat.setStatusBarColor(this,getResources().getColor(R.color.bg_color),true);
     }
 
 }

@@ -6,6 +6,7 @@ import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.ContentUris;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
@@ -80,6 +81,10 @@ public  class MainActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private LinearLayoutManager linearLayoutManager;
     private int lastVisibleItem;
+    private int numMessages;
+    private NotificationCompat.Builder builder;
+    private NotificationManager systemService;
+    private PendingIntent pendingIntent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -119,7 +124,7 @@ public  class MainActivity extends AppCompatActivity {
                 break;
 
             case R.id.icon_1:
-
+initSuoPing();
                 break;
             case R.id.icon_2:
                 Toast.makeText(this, "2", Toast.LENGTH_LONG).show();
@@ -130,9 +135,74 @@ public  class MainActivity extends AppCompatActivity {
             case R.id.icon_4:
                 initNotification();
                 break;
+            case R.id.icon_5:
+                initProgress();
+                break;
         }
         return true;
     }
+
+    private void initSuoPing() {
+        Intent intent = new Intent(this,PendingIntentActivity.class);
+        PendingIntent pendingIntent = PendingIntent.getActivities(this,2,new Intent[]{intent},PendingIntent.FLAG_UPDATE_CURRENT);
+        Notification notification = new Notification.Builder(this)
+                // Show controls on lock screen even when user hides sensitive content.
+                .setVisibility(Notification.VISIBILITY_PUBLIC)
+                .setSmallIcon(R.drawable.icon_title)
+                // Add media control buttons that invoke intents in your media service
+                .addAction(R.drawable.icon_menu_2, "Previous", pendingIntent) // #0
+                .addAction(R.drawable.icon_done, "Pause", pendingIntent)  // #1
+                .addAction(R.drawable.icon_menu_1, "Next", pendingIntent).build();     // #2
+                // Apply the media style template
+
+    }
+
+    /**
+     * 带进度条的通知
+     */
+    private void initProgress() {
+
+        Intent intents = new Intent(this,PendingIntentActivity.class);
+        pendingIntent = PendingIntent.getActivities(this,1,new Intent[]{intents},PendingIntent.FLAG_UPDATE_CURRENT);
+        systemService = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        builder = new NotificationCompat.Builder(this);
+        builder.setContentTitle("我是进度条标题");
+        builder.setContentText("this a progressbar");
+        builder.setSmallIcon(R.drawable.icon_food_1);
+        builder.setPriority(NotificationCompat.PRIORITY_MAX);
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                int incr;
+                // Do the "lengthy" operation 20 times
+                for (incr = 0; incr <= 100; incr+=5) {
+                    // Sets the progress indicator to a max value, the
+                    // current completion percentage, and "determinate"
+                    // state
+                    builder.setProgress(100, incr, false);
+                    // Displays the progress bar for the first time.
+                    systemService.notify(0, builder.build());
+                    // Sleeps the thread, simulating an operation
+                    // that takes time
+                    try {
+                        // Sleep for 5 seconds
+                        Thread.sleep(2*1000);
+                    } catch (InterruptedException e) {
+                        Log.d(TAG, "sleep failure");
+                    }
+                }
+                // When the loop is finished, updates the notification
+                builder.setContentText("Download complete")
+                        // Removes the progress bar
+                        .setProgress(0,0,false);
+                builder.setContentIntent(pendingIntent);
+                builder.setAutoCancel(true);
+                systemService.notify(0, builder.build());
+            }
+
+        }).start();
+    }
+
     private void refreshFuits() {
         new Thread(new Runnable() {
             @Override
@@ -178,6 +248,9 @@ public  class MainActivity extends AppCompatActivity {
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
             actionBar.setHomeAsUpIndicator(R.drawable.icon_title_menu);
+            actionBar.setTitle("");
+            actionBar.setLogo(R.mipmap.icon_logo_in_player);
+//actionBar.setIcon(R.mipmap.icon_logo_in_player);
 
         }
         //设置滑动菜单里面的默认选中条目
@@ -230,6 +303,7 @@ public  class MainActivity extends AppCompatActivity {
 //                fruitList.remove((int)v.getTag());
 //                adapter.notifyItemRemoved((int)v.getTag());
                 Intent intent = new Intent(MainActivity.this, FruitActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_LAUNCH_ADJACENT);//多窗口模式中启动activity在旁边显示
                 intent.putExtra("fruitName",fruitList.get((int)v.getTag()).getName());
                 intent.putExtra("fruitId",fruitList.get((int)v.getTag()).getImageId());
                 startActivity(intent);
@@ -410,23 +484,37 @@ public  class MainActivity extends AppCompatActivity {
 
     private void initNotification() {
         Intent intents =new Intent(this, PendingIntentActivity.class);
-        PendingIntent pi = PendingIntent.getActivities(this,0, new Intent[]{intents},0);
+//        intents.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK
+//                | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        PendingIntent pi = PendingIntent.getActivities(this,0, new Intent[]{intents}, PendingIntent.FLAG_UPDATE_CURRENT);
 
+//        //设置常规的Activity pendingintent 创建任务栈
+//        TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);
+//        //添加返回任务栈
+//        stackBuilder.addParentStack(PendingIntentActivity.class);
+//        //添加任务栈顶部intent
+//        stackBuilder.addNextIntent(intents);
+//        PendingIntent resultPendingIntent = stackBuilder.getPendingIntent(0,PendingIntent.FLAG_UPDATE_CURRENT);
 
         NotificationManager manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-        Notification notification = new NotificationCompat.Builder(this)
-                .setContentTitle("我是标题")
-                .setContentText("我是内容")
+        int notifyID = 1;//更新通知
+        numMessages = 0;
+            Notification notification = new NotificationCompat.Builder(this)
+                .setContentTitle("我是标题")//必须的内容
+                .setContentText("我是内容")//必须的内容
                 .setWhen(System.currentTimeMillis())
-                .setSmallIcon(R.drawable.icon_title)
+                .setSmallIcon(R.drawable.icon_title)//必须的内容
                 .setLargeIcon(BitmapFactory.decodeResource(getResources(),R.drawable.icon_food_1))
                 .setContentIntent(pi)//pendingIntent跳转
                 .setAutoCancel(true)//点击通知之后自己取消
                 .setDefaults(NotificationCompat.DEFAULT_ALL)
                 .setStyle(new NotificationCompat.BigPictureStyle().bigPicture(
                         BitmapFactory.decodeResource(getResources(),R.drawable.icon_food_2)))
-                .setPriority(NotificationCompat.PRIORITY_MAX)
+                .setPriority(NotificationCompat.PRIORITY_MAX)//小型浮动窗口
+                    .setVisibility(NotificationCompat.VISIBILITY_PUBLIC )
                 .build();
+
+
         manager.notify(1,notification);
 
     }

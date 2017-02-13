@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<litepal>
+    <dbname value = "BookStore"></dbname>
+    <version value = "1"></version>
+   <list>
+
+       <mapping class = "com.laojiang.androidlearn70.bean.litepal.Book"></mapping>
+   </list>
+</litepal>

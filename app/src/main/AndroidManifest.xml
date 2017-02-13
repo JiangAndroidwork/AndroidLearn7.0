@@ -26,6 +26,19 @@
             </intent-filter>
 
         </activity>
+        <!--//多选相册-->
+        <activity
+            android:name="cc.dagger.photopicker.MultiImageSelectorActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/NO_ACTIONBAR" />
+
+        <activity
+            android:name="cc.dagger.photopicker.PhotoPreviewActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/NO_ACTIONBAR"/>
+
+
+            android:theme="@style/PhotoPickerTheme"/>
         <activity android:name=".activity.FruitActivity"
             android:supportsPictureInPicture="true"
             android:theme="@style/FruitActivityTheme"></activity>
@@ -56,6 +69,12 @@
         <activity android:name=".activity.intent.TestBindServiceActivity"></activity>
 
         <service android:name=".server.TestBindService"></service>
+        <activity android:name=".activity.intent.PhotoPickerActivity"></activity>
+        <activity android:name=".activity.intent.PhotosSelectActivity"></activity>
+        <activity android:name=".activity.intent.PhotosTest2Activity"></activity>
+        <activity android:name=".activity.intent.ViewAnimationActivity"></activity>
+        <activity android:name=".activity.intent.AnimationActivity"></activity>
+        <activity android:name=".activity.intent.LitePalActivity"></activity>
     </application>
 
 </manifest>

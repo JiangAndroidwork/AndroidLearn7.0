@@ -5,5 +5,6 @@
 <com.laojiang.androidlearn70.utils.weight.CanDragListView
     android:id="@+id/drag_listview"
     android:layout_width="match_parent"
+    android:dividerHeight="4dp"
     android:layout_height="match_parent"></com.laojiang.androidlearn70.utils.weight.CanDragListView>
 </LinearLayout>

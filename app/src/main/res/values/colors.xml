@@ -6,4 +6,7 @@
     <color name="nocolor">#00ff4081</color>
     <color name="white">#fff</color>
     <color name="bg_color">#a9a3a3</color>
+    <color name="__picker_item_photo_border_selected">#ff99cc00</color>
+    <color name="__picker_item_photo_border_n">#33ffffff</color>
+    <color name="photopicker_background">#a9a3a3</color>
 </resources>

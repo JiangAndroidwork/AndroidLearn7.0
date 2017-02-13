@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:gravity="center_horizontal"
+    android:layout_height="match_parent">
+<Button
+    android:id="@+id/bt_visible_view"
+    android:text="显示view"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content" />
+    <Button
+        android:id="@+id/bt_gone_view"
+        android:text="隐藏view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <TextView
+        android:visibility="invisible"
+        android:id="@+id/tv_animation_view"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:gravity="center"
+        android:textSize="18sp"
+        android:textColor="@android:color/background_dark"
+        android:text="this is view"
+        />
+    <Button
+        android:id="@+id/bt_transition"
+        android:text="共享元素启动一个操作行为"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <ImageView
+        android:id="@+id/iv_view"
+        android:src="@drawable/icon_food_1"
+        android:layout_width="100dp"
+        android:layout_height="100dp" />
+</LinearLayout>

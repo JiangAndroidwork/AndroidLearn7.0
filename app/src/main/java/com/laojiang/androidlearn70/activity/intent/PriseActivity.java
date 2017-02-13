@@ -33,7 +33,7 @@ public class PriseActivity extends BaseActivity {
     @Override
     protected void initViews() {
         super.initViews();
-        String[] buttonName = new String[]{"打电话","draglistview","bindServer","IntentService","打电话","发短信","打电话","发短信","打电话","发短信","打电话","发短信","打电话","发短信"};
+        String[] buttonName = new String[]{"打电话","draglistview","bindServer","IntentService","相册1","使用揭露效果","LitePal数据库","发短信","打电话","发短信","打电话","发短信","打电话","发短信"};
         adapter = new GvPriseAdapter(mContext,buttonName);
         gvList.setAdapter(adapter);
         iniview();
@@ -60,6 +60,18 @@ public class PriseActivity extends BaseActivity {
                         break;
                     case 3:
 
+                        break;
+                    case 4:
+                        Intent photoPicker = new Intent(mContext,PhotosSelectActivity.class);
+                        startActivity(photoPicker);
+                        break;
+                    case 5:
+                        Intent photo =  new Intent(mContext,ViewAnimationActivity.class);
+                        startActivity(photo);
+                        break;
+                    case 6:
+                        Intent litePal = new Intent(mContext,LitePalActivity.class);
+                        startActivity(litePal);
                         break;
                 }
             }

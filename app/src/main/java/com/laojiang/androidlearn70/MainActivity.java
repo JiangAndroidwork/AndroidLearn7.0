@@ -463,7 +463,8 @@ initSuoPing();
     }
 
 
-    private String getImagePath(Uri uri, String selection) {
+    private String
+    getImagePath(Uri uri, String selection) {
         String path = null;
         Cursor cursor = getContentResolver().query(uri,null,selection,null,null);
         if (cursor!=null){

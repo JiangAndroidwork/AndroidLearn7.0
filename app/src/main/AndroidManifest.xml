@@ -4,6 +4,8 @@
 <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"></uses-permission>
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"></uses-permission>
     <uses-permission android:name="android.permission.VIBRATE"></uses-permission>
+    <!--<uses-permission android:name="android.permission.INTERNET"></uses-permission>-->
+    <!--<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"></uses-permission>-->
     <application
         android:resizeableActivity="true"
         android:name=".MyApplication"
@@ -75,6 +77,9 @@
         <activity android:name=".activity.intent.ViewAnimationActivity"></activity>
         <activity android:name=".activity.intent.AnimationActivity"></activity>
         <activity android:name=".activity.intent.LitePalActivity"></activity>
+        <activity android:name=".activity.intent.LottieActivity"></activity>
+        <activity android:name=".activity.intent.MyRetrofitActivity"></activity>
+        <activity android:name=".activity.intent.retrofit.MyDownFilesActivity"></activity>
     </application>
 
 </manifest>

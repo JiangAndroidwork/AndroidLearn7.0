@@ -6,8 +6,8 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.laojiang.androidlearn70.R;
-import com.laojiang.androidlearn70.adapter.adapterpacking.MyBaseAdapter;
-import com.laojiang.androidlearn70.adapter.adapterpacking.ViewHolder;
+import com.laojiang.androidlearn70.utils.weight.adapterpacking.MyBaseAdapter;
+import com.laojiang.androidlearn70.utils.weight.adapterpacking.ViewHolder;
 
 /**
  * listview适配器应用

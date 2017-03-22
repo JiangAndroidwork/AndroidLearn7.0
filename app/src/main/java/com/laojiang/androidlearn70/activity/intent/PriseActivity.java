@@ -8,6 +8,7 @@ import android.widget.GridView;
 
 import com.laojiang.androidlearn70.R;
 import com.laojiang.androidlearn70.activity.BaseActivity;
+import com.laojiang.androidlearn70.activity.intent.retrofit.MyDownFilesActivity;
 import com.laojiang.androidlearn70.adapter.prise.GvPriseAdapter;
 
 import butterknife.BindView;
@@ -33,7 +34,7 @@ public class PriseActivity extends BaseActivity {
     @Override
     protected void initViews() {
         super.initViews();
-        String[] buttonName = new String[]{"打电话","draglistview","bindServer","IntentService","相册1","使用揭露效果","LitePal数据库","发短信","打电话","发短信","打电话","发短信","打电话","发短信"};
+        String[] buttonName = new String[]{"打电话","draglistview","bindServer","IntentService","相册1","使用揭露效果","LitePal数据库","lottie动画","MyRetrofitActivity","文件下载","打电话","发短信","打电话","发短信"};
         adapter = new GvPriseAdapter(mContext,buttonName);
         gvList.setAdapter(adapter);
         iniview();
@@ -72,6 +73,18 @@ public class PriseActivity extends BaseActivity {
                     case 6:
                         Intent litePal = new Intent(mContext,LitePalActivity.class);
                         startActivity(litePal);
+                        break;
+                    case 7:
+                        Intent lottie = new Intent(mContext,LottieActivity.class);
+                        startActivity(lottie);
+                        break;
+                    case 8:
+                        Intent myRetrofit = new Intent(mContext,MyRetrofitActivity.class);
+                        startActivity(myRetrofit);
+                        break;
+                    case 9:
+                        Intent myDownFiles = new Intent(mContext,MyDownFilesActivity.class);
+                        startActivity(myDownFiles);
                         break;
                 }
             }

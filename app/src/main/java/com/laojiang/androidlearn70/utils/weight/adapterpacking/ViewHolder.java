@@ -1,4 +1,4 @@
-package com.laojiang.androidlearn70.adapter.adapterpacking;
+package com.laojiang.androidlearn70.utils.weight.adapterpacking;
 
 import android.content.Context;
 import android.util.SparseArray;

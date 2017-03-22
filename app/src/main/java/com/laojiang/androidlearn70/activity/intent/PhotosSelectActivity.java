@@ -84,7 +84,7 @@ public class PhotosSelectActivity extends BaseActivity {
 
                 } else {
                     PhotoPicker.preview()
-                            .paths((ArrayList<String>) selectedPhotos)
+                                .paths((ArrayList<String>) selectedPhotos)
                             .currentItem(position)
                             .start(PhotosSelectActivity.this);
                 }
@@ -138,7 +138,6 @@ public class PhotosSelectActivity extends BaseActivity {
                     getString(R.string.permission_rationale),
                     REQUEST_STORAGE_READ_ACCESS_PERMISSION);
         } else {
-
             Load load = PhotoPicker.load()
                     .showCamera(showCamera)
                     .filter(PhotoFilter.build().showGif(isGif).minSize(2 * 1024))

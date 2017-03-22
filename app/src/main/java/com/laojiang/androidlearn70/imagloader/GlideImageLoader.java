@@ -16,7 +16,7 @@ import cc.dagger.photopicker.PhotoPickerImageLoader;
 import uk.co.senab.photoview.PhotoView;
 
 /**
- * Created by wzfu on 16/6/5.
+ * Created by JIANG on 16/6/5.
  */
 public class GlideImageLoader extends PhotoPickerImageLoader<ImageView, PhotoView> {
 
@@ -79,7 +79,7 @@ public class GlideImageLoader extends PhotoPickerImageLoader<ImageView, PhotoVie
                 .load(Uri.fromFile(new File(imagePath)))
                 .diskCacheStrategy(DiskCacheStrategy.NONE) //不缓存到SD卡
                 .skipMemoryCache(true)
-                .override(width, height)
+                .override(500, 500)
                 .crossFade()
                 .into(view);
     }

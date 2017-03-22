@@ -1,0 +1,122 @@
+package com.laojiang.androidlearn70.bean;
+
+
+import com.google.gson.annotations.SerializedName;
+import com.laojiang.retrofithttp.weight.bean.BaseReponseResult;
+
+import java.util.List;
+
+/**
+ * 类介绍（必填）：
+ * Created by Jiang on 2017/3/9 10:21.
+ */
+
+public class TestBeanSS extends BaseReponseResult {
+
+    @SerializedName("result")
+    private List<ResultEntity> resultX;
+
+    public List<ResultEntity> getResultX() {
+        return resultX;
+    }
+
+    public void setResultX(List<ResultEntity> resultX) {
+        this.resultX = resultX;
+    }
+
+    public static class ResultEntity {
+        /**
+         * id : 10
+         * platId : 12
+         * semesterId : 13
+         * examname : 测试考号导出
+         * state : 0
+         * istest : 0
+         * issystem : 0
+         * schoolNo : 1611
+         * studentNum : 8
+         */
+
+        private int id;
+        private int platId;
+        private int semesterId;
+        private String examname;
+        private int state;
+        private int istest;
+        private int issystem;
+        private String schoolNo;
+        private int studentNum;
+
+        public int getId() {
+            return id;
+        }
+
+        public void setId(int id) {
+            this.id = id;
+        }
+
+        public int getPlatId() {
+            return platId;
+        }
+
+        public void setPlatId(int platId) {
+            this.platId = platId;
+        }
+
+        public int getSemesterId() {
+            return semesterId;
+        }
+
+        public void setSemesterId(int semesterId) {
+            this.semesterId = semesterId;
+        }
+
+        public String getExamname() {
+            return examname;
+        }
+
+        public void setExamname(String examname) {
+            this.examname = examname;
+        }
+
+        public int getState() {
+            return state;
+        }
+
+        public void setState(int state) {
+            this.state = state;
+        }
+
+        public int getIstest() {
+            return istest;
+        }
+
+        public void setIstest(int istest) {
+            this.istest = istest;
+        }
+
+        public int getIssystem() {
+            return issystem;
+        }
+
+        public void setIssystem(int issystem) {
+            this.issystem = issystem;
+        }
+
+        public String getSchoolNo() {
+            return schoolNo;
+        }
+
+        public void setSchoolNo(String schoolNo) {
+            this.schoolNo = schoolNo;
+        }
+
+        public int getStudentNum() {
+            return studentNum;
+        }
+
+        public void setStudentNum(int studentNum) {
+            this.studentNum = studentNum;
+        }
+    }
+}

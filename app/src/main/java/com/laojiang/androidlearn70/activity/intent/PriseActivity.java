@@ -8,6 +8,7 @@ import android.widget.GridView;
 
 import com.laojiang.androidlearn70.R;
 import com.laojiang.androidlearn70.activity.BaseActivity;
+import com.laojiang.androidlearn70.activity.intent.pickerimag.PickerImagerActivity;
 import com.laojiang.androidlearn70.activity.intent.retrofit.MyDownFilesActivity;
 import com.laojiang.androidlearn70.adapter.prise.GvPriseAdapter;
 
@@ -34,7 +35,7 @@ public class PriseActivity extends BaseActivity {
     @Override
     protected void initViews() {
         super.initViews();
-        String[] buttonName = new String[]{"打电话","draglistview","bindServer","IntentService","相册1","使用揭露效果","LitePal数据库","lottie动画","MyRetrofitActivity","文件下载","打电话","发短信","打电话","发短信"};
+        String[] buttonName = new String[]{"打电话","draglistview","bindServer","IntentService","相册1","使用揭露效果","LitePal数据库","lottie动画","MyRetrofitActivity","文件下载","图片选择器","发短信","打电话","发短信"};
         adapter = new GvPriseAdapter(mContext,buttonName);
         gvList.setAdapter(adapter);
         iniview();
@@ -85,6 +86,10 @@ public class PriseActivity extends BaseActivity {
                     case 9:
                         Intent myDownFiles = new Intent(mContext,MyDownFilesActivity.class);
                         startActivity(myDownFiles);
+                        break;
+                    case 10:
+                        Intent pickImag = new Intent (mContext,PickerImagerActivity.class);
+                        startActivity(pickImag);
                         break;
                 }
             }

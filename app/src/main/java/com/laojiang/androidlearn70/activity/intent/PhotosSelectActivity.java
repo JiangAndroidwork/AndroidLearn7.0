@@ -73,7 +73,7 @@ public class PhotosSelectActivity extends BaseActivity {
         super.initViews();
         tvResult.setVisibility(View.GONE);
         recyclerView.setLayoutManager(new StaggeredGridLayoutManager(4, OrientationHelper.VERTICAL));
-        photoAdapter = new PhotoAdapter(this, selectedPhotos);
+//        photoAdapter = new PhotoAdapter(this, selectedPhotos);
         recyclerView.setAdapter(photoAdapter);
 
         recyclerView.addOnItemTouchListener(new RecyclerItemClickListener(this, new RecyclerItemClickListener.OnItemClickListener() {

@@ -11,9 +11,11 @@ import android.widget.ImageView;
 import com.bumptech.glide.Glide;
 import com.laojiang.androidlearn70.R;
 import com.laojiang.androidlearn70.system.AndroidLifecycleUtils;
+import com.laojiang.imagepickers.data.ImageBean;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -21,7 +23,7 @@ import java.util.ArrayList;
  */
 public class PhotoAdapter extends RecyclerView.Adapter<PhotoAdapter.PhotoViewHolder> {
 
-  private ArrayList<String> photoPaths = new ArrayList<String>();
+  private List<ImageBean> photoPaths = new ArrayList<ImageBean>();
   private LayoutInflater inflater;
 
   private Context mContext;
@@ -31,7 +33,7 @@ public class PhotoAdapter extends RecyclerView.Adapter<PhotoAdapter.PhotoViewHol
 
   public final static int MAX = 9;
 
-  public PhotoAdapter(Context mContext, ArrayList<String> photoPaths) {
+  public PhotoAdapter(Context mContext, List<ImageBean> photoPaths) {
     this.photoPaths = photoPaths;
     this.mContext = mContext;
     inflater = LayoutInflater.from(mContext);
@@ -58,7 +60,7 @@ public class PhotoAdapter extends RecyclerView.Adapter<PhotoAdapter.PhotoViewHol
   public void onBindViewHolder(final PhotoViewHolder holder, final int position) {
 
     if (getItemViewType(position) == TYPE_PHOTO) {
-      Uri uri = Uri.fromFile(new File(photoPaths.get(position)));
+      Uri uri = Uri.fromFile(new File(photoPaths.get(position).getImagePath()));
 
       boolean canLoadImage = AndroidLifecycleUtils.canLoadImage(holder.ivPhoto.getContext());
 

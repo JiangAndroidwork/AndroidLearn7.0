@@ -55,17 +55,15 @@ public class MyDownFilesActivity extends BaseActivity {
     protected void initViews() {
         super.initViews();
         downUrl = new String[]{"http://www.izaodao.com/app/izaodao_app.apk"
-                ,"http://114.215.142.151/cloudfile/public/classfile/2017031713563149420/东京喰种01_20170317135631460.mp4"};
+                ,"http://114.215.142.151/cloudfile/public/classfile/2017031713444349420/学生信息批量导出_2017031713444350.xls"};
     }
-
-
     @OnClick({R.id.bt_start, bt_pause, R.id.bt_end})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.bt_start:
                 //文件下载
                 finalDownFiles = new FinalDownFiles(false,mContext,downUrl[1],
-                        Environment.getExternalStorageDirectory() + "/bjhj/accessory/" + "东京喰种01_20170317135631460.mp4",new FinalDownFileResult(){
+                        Environment.getExternalStorageDirectory() + "/bjhj/accessory/" + "学生信息批量导出_2017031713444350.xls",new FinalDownFileResult(){
                     @Override
                     public void onLoading(long readLength, long countLength) {
                         super.onLoading(readLength, countLength);
@@ -85,7 +83,6 @@ public class MyDownFilesActivity extends BaseActivity {
                         finalDownFiles.setPause();
                     btPause.setText("开始");
                     isPause = true;
-
                 }
                 break;
             case R.id.bt_end:

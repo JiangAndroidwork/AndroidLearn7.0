@@ -38,19 +38,15 @@ public class LitePalActivity extends BaseActivity {
     Button btQueryDb;
     @BindView(R.id.tv_result)
     TextView tvResult;
-
     @Override
     protected void initSetContentView() {
         super.initSetContentView();
         setContentView(R.layout.activity_litepal);
     }
-
     @Override
     protected void initViews() {
         super.initViews();
     }
-
-
     private void addData() {
         Book book = new Book();
         book.setAuthor("Lao Jiang");
@@ -89,7 +85,6 @@ public class LitePalActivity extends BaseActivity {
                 break;
         }
     }
-
     private void deleteDB() {
         List<Book> allBooks = DataSupport.findAll(Book.class);
         for (Book books:allBooks){

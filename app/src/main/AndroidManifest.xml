@@ -40,7 +40,6 @@
             android:theme="@style/NO_ACTIONBAR"/>
 
 
-            android:theme="@style/PhotoPickerTheme"/>
         <activity android:name=".activity.FruitActivity"
             android:supportsPictureInPicture="true"
             android:theme="@style/FruitActivityTheme"></activity>
@@ -80,6 +79,7 @@
         <activity android:name=".activity.intent.LottieActivity"></activity>
         <activity android:name=".activity.intent.MyRetrofitActivity"></activity>
         <activity android:name=".activity.intent.retrofit.MyDownFilesActivity"></activity>
+        <activity android:name=".activity.intent.pickerimag.PickerImagerActivity"></activity>
     </application>
 
 </manifest>

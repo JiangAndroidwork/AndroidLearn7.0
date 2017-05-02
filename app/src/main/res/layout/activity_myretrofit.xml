@@ -6,10 +6,8 @@
     android:numColumns="3"
     android:verticalSpacing="4dp"
     android:horizontalSpacing="2dp"
-
     android:id="@+id/gv_picture"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-
 </GridView>
 </LinearLayout>
